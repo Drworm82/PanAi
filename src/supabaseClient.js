@@ -1,0 +1,9 @@
+import { createClient } from "@supabase/supabase-js";
+
+const SUPABASE_URL = "https://placeholder.supabase.co";
+const SUPABASE_ANON_KEY = "public-anon-key-placeholder";
+
+export const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
