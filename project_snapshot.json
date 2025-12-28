@@ -1,0 +1,32 @@
+{
+  "project": "Escuela de Repostería en el Árbol",
+  "version": "0.1",
+  "last_updated": "Sprint 1 — Inicio",
+  "sprints": [
+    "Sprint 1 — Cascarón navegable",
+    "Sprint 2 — Recetas y base de datos",
+    "Sprint 3 — Premium bloqueado",
+    "Sprint 4 — NPCs y diálogos",
+    "Sprint 5 — Estética y branding"
+  ],
+  "structure": {
+    "floors": [
+      "exterior",
+      "recepcion",
+      "biblioteca",
+      "cocinas"
+    ],
+    "navigation": "flechas subir/bajar",
+    "auth": "supabase",
+    "db": {
+      "tables": [
+        "users",
+        "recipes",
+        "npc_dialogues",
+        "npc_user_logs"
+      ]
+    }
+  },
+  "canon_active": true,
+  "todo_next": "Crear estructura Sprint 1 (Vite + escenas + navegación base)"
+}
