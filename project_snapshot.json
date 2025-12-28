@@ -19,8 +19,11 @@
     "navigation": "flechas subir/bajar",
     "auth": {
       "provider": "supabase",
-      "login": "email_magic_link",
-      "premium_source": "public.users.premium"
+      "login": "email_magic_link"
+    },
+    "premium": {
+      "source": "public.users.premium",
+      "enforcement": "frontend_gate"
     },
     "db": {
       "tables": [
