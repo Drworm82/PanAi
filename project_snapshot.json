@@ -1,12 +1,12 @@
 {
   "project": "Escuela de Repostería en el Árbol",
-  "version": "0.3",
-  "last_updated": "Sprint 3 — Cerrado",
+  "version": "0.4",
+  "last_updated": "Sprint 4 — Cerrado",
   "sprints": [
     "Sprint 1 — Cascarón navegable (COMPLETADO)",
     "Sprint 2 — Recetas y base de datos (COMPLETADO)",
     "Sprint 3 — Login mínimo + Premium bloqueado (COMPLETADO)",
-    "Sprint 4 — NPCs y diálogos",
+    "Sprint 4 — NPCs y diálogos (COMPLETADO)",
     "Sprint 5 — Estética y branding"
   ],
   "structure": {
@@ -19,11 +19,19 @@
     "navigation": "flechas subir/bajar",
     "auth": {
       "provider": "supabase",
-      "login": "email_magic_link"
+      "login": "email_magic_link",
+      "status": "operativo_basico"
     },
     "premium": {
-      "source": "public.users.premium",
-      "enforcement": "frontend_gate"
+      "source_of_truth": "user.user_metadata.premium === true",
+      "enforcement": "frontend_gate",
+      "estado": "MVP_listo_sin_RLS"
+    },
+    "npc": {
+      "system": "npcManager + npcDialogues",
+      "appearance": "one_per_floor_on_entry",
+      "dialogue_policy": "no_immediate_repeat",
+      "storage": "localStorage"
     },
     "db": {
       "tables": [
@@ -35,5 +43,5 @@
     }
   },
   "canon_active": true,
-  "todo_next": "Sprint 4 — NPCs y diálogos"
+  "todo_next": "Sprint 5 — Estética y branding"
 }
