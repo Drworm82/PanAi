@@ -1,0 +1,40 @@
+/* Tipografías */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito:wght@300;400;600&display=swap");
+
+:root {
+  /* Paleta CANON */
+  --color-forest: #3D5A40;
+  --color-cream: #EDE6C4;
+  --color-wood: #C49A6C;
+  --color-paper: #F5F1E6;
+  --color-coffee: #6A4E3D;
+
+  /* Tipografía */
+  --font-title: "Cormorant Garamond", serif;
+  --font-body: "Nunito", sans-serif;
+
+  /* UI */
+  --radius-soft: 14px;
+  --radius-card: 18px;
+  --shadow-soft: 2px 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* Base */
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-coffee);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-title);
+  color: var(--color-forest);
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}

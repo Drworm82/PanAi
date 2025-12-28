@@ -1,22 +1,19 @@
 {
   "project": "Escuela de Repostería en el Árbol",
-  "version": "0.4",
-  "last_updated": "Sprint 4 — Cerrado",
+  "version": "0.6",
+  "last_updated": "Sprint 6.1 — Cerrado",
   "sprints": [
     "Sprint 1 — Cascarón navegable (COMPLETADO)",
     "Sprint 2 — Recetas y base de datos (COMPLETADO)",
     "Sprint 3 — Login mínimo + Premium bloqueado (COMPLETADO)",
     "Sprint 4 — NPCs y diálogos (COMPLETADO)",
-    "Sprint 5 — Estética y branding"
+    "Sprint 5 — Estética y branding (COMPLETADO)",
+    "Sprint 6 — Monetización MVP (COMPLETADO)",
+    "Sprint 6.1 — Webhook Stripe firma válida (COMPLETADO)"
   ],
   "structure": {
-    "floors": [
-      "exterior",
-      "recepcion",
-      "biblioteca",
-      "cocinas"
-    ],
-    "navigation": "flechas subir/bajar",
+    "floors": ["exterior","recepcion","biblioteca","cocinas"],
+    "navigation": "flechas_subir_bajar",
     "auth": {
       "provider": "supabase",
       "login": "email_magic_link",
@@ -24,24 +21,24 @@
     },
     "premium": {
       "source_of_truth": "user.user_metadata.premium === true",
-      "enforcement": "frontend_gate",
-      "estado": "MVP_listo_sin_RLS"
+      "activation": "checkout_stripe + webhook_confirmado",
+      "webhook_status": "200_OK",
+      "estado": "MVP_funcional_con_firma_real"
     },
     "npc": {
-      "system": "npcManager + npcDialogues",
-      "appearance": "one_per_floor_on_entry",
-      "dialogue_policy": "no_immediate_repeat",
+      "appearance": "1_por_piso",
+      "dialogues": "rotacion_sin_repeticion",
       "storage": "localStorage"
     },
+    "ui": {
+      "theme": "pixel_ghibli_cozy_base",
+      "components": ["CozyContainer","CozyButton","CozyCard"],
+      "status": "identidad_base_aplicada"
+    },
     "db": {
-      "tables": [
-        "users",
-        "recipes",
-        "npc_dialogues",
-        "npc_user_logs"
-      ]
+      "tables": ["users","recipes","npc_dialogues","npc_user_logs"]
     }
   },
   "canon_active": true,
-  "todo_next": "Sprint 5 — Estética y branding"
+  "todo_next": "Sprint 7 — ¿publicar MVP o progresión narrativa?"
 }

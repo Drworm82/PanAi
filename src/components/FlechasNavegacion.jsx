@@ -1,3 +1,5 @@
+import CozyButton from "./CozyButton";
+
 export default function FlechasNavegacion({
   onUp,
   onDown,
@@ -11,18 +13,21 @@ export default function FlechasNavegacion({
         display: "flex",
         justifyContent: "space-between",
         padding: "16px",
-        borderTop: "1px solid #ccc",
+        background: "var(--color-paper)",
+        borderTop: "2px solid var(--color-wood)",
       }}
     >
-      <button onClick={onDown} disabled={!canDown}>
+      <CozyButton onClick={onDown} disabled={!canDown}>
         ↓ Bajar
-      </button>
+      </CozyButton>
 
-      <div>{label.toUpperCase()}</div>
+      <div style={{ fontWeight: "600" }}>
+        {label.toUpperCase()}
+      </div>
 
-      <button onClick={onUp} disabled={!canUp}>
+      <CozyButton onClick={onUp} disabled={!canUp}>
         ↑ Subir
-      </button>
+      </CozyButton>
     </div>
   );
 }
