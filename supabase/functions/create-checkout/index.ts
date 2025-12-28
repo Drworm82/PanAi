@@ -1,43 +1,31 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import Stripe from "https://esm.sh/stripe@14.21.0";
+// supabase/functions/create-checkout/index.ts
+import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
+import Stripe from "https://esm.sh/stripe@14.25.0?target=deno";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-};
+const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY")!, {
+  apiVersion: "2023-10-16",
+});
 
 serve(async (req) => {
-  // CORS preflight
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
-  }
-
-  const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
-  console.log("STRIPE KEY EXISTS:", !!stripeKey);
-
-  if (!stripeKey) {
-    return new Response(
-      JSON.stringify({ error: "Stripe secret key missing" }),
-      {
-        headers: {
-          ...corsHeaders,
-          "Content-Type": "application/json",
-        },
-        status: 500,
-      }
-    );
-  }
-
-  const stripe = new Stripe(stripeKey, {
-    apiVersion: "2023-10-16",
-  });
-
   try {
+    if (req.method !== "POST") {
+      return new Response("Method Not Allowed", { status: 405 });
+    }
+
+    const { user_id, email } = await req.json();
+
+    if (!user_id || !email) {
+      return new Response(
+        JSON.stringify({ error: "Missing user_id or email" }),
+        { status: 400 }
+      );
+    }
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
+      customer_email: email,
+
       line_items: [
         {
           price_data: {
@@ -45,37 +33,32 @@ serve(async (req) => {
             product_data: {
               name: "Acceso Premium — Escuela de Repostería en el Árbol",
             },
-            unit_amount: 9900,
+            unit_amount: 9900, // $99.00 MXN
           },
           quantity: 1,
         },
       ],
-      success_url: `${Deno.env.get("SITE_URL")}/?premium=success`,
-      cancel_url: `${Deno.env.get("SITE_URL")}/?premium=cancel`,
+
+      metadata: {
+        user_id,
+      },
+
+      success_url: "https://pan-ai.vercel.app/cocinas",
+      cancel_url: "https://pan-ai.vercel.app/recepcion",
     });
 
     return new Response(
       JSON.stringify({ url: session.url }),
       {
-        headers: {
-          ...corsHeaders,
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         status: 200,
       }
     );
   } catch (err) {
-    console.error("STRIPE ERROR:", err);
-
+    console.error("create-checkout error:", err);
     return new Response(
-      JSON.stringify({ error: String(err) }),
-      {
-        headers: {
-          ...corsHeaders,
-          "Content-Type": "application/json",
-        },
-        status: 500,
-      }
+      JSON.stringify({ error: "Stripe checkout failed" }),
+      { status: 500 }
     );
   }
 });
