@@ -3,6 +3,10 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { supabase } from "./supabaseClient";
 
+// ⬇️ ORDEN CRÍTICO DE CSS
+import "./styles/theme.css";
+import "./index.css";
+
 async function handleAuthRedirect() {
   const hash = window.location.hash;
 
@@ -15,7 +19,6 @@ async function handleAuthRedirect() {
       console.log("Session restored:", data.session);
     }
 
-    // Limpia el hash para evitar loops
     window.history.replaceState(null, "", window.location.pathname);
   }
 }
